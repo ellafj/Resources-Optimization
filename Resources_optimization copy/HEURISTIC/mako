@@ -1,0 +1,4 @@
+rm -f Heur
+
+gcc -c *.cpp
+gcc -o Heur *.o

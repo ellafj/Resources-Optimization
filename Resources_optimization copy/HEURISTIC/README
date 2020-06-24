@@ -1,0 +1,20 @@
+Bolo.He*************************************************
+
+To compile and link use 
+	./mako
+
+*************************************************
+
+To run the greedy on some instance use
+	./Heur inp.col
+
+it produces an output file mysol.txt that contains the heuristic solution
+
+*************************************************
+
+To check a solution run
+	./Heur inp.col mysol.txt
+
+it checks the solution feasibility and cost
+
+*************************************************
