@@ -17,11 +17,11 @@ def readFile(filename):
     f.close()
     return int(nnodes), int(nedges), edges
 
-def prim(nnodes, nedges, edges):
+def prim(nnodes, nedges, edges, startNode):
     visitedNodes = []
     unvisitedNodes = [i+1 for i in range(nnodes)]
 
-    node = 1 #random.randint(1,nnodes)
+    node = startNode #random.randint(1,nnodes)
     visitedNodes.append(node)
     unvisitedNodes.remove(node)
 
@@ -107,11 +107,20 @@ def prim(nnodes, nedges, edges):
         print('colors', colors)
         print('visited nodes', visitedNodes)
 
+    solVal = max(colors)
+    print(solVal)
 
+    return solVal
 
+def multistart(nnodes, nedges, edges):
+    solVals = []
+    for node in range(1,nnodes+1):
+        solVals.append(prim(nnodes, nedges, edges, node))
+    print(solVals)
+    print(solVals.index(min(solVals)))
 
 def main():
     nnodes, nedges, edges = readFile('./HEURISTIC/INSTANCES/test.col') #./HEURISTIC/INSTANCES/GEOM020a.col')
-    prim(nnodes, nedges, edges)
+    multistart(nnodes, nedges, edges)
 
 main()
