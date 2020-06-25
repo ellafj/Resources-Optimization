@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="b62ae619-ae56-458a-bb0d-c63f48dfa2dd" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Resources_optimization copy.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/#main.o#" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/Heur" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/INSTANCES/GEOM020a.col" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/INSTANCES/GEOM020b.col" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/INSTANCES/GEOM020c.col" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/INSTANCES/GEOM030a.col" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/INSTANCES/GEOM030b.col" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/INSTANCES/GEOM030c.col" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/INSTANCES/GEOM040a.col" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/INSTANCES/GEOM040b.col" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/INSTANCES/GEOM040c.col" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/INSTANCES/GEOM050a.col" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/INSTANCES/GEOM050b.col" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/INSTANCES/GEOM050c.col" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/INSTANCES/GEOM060a.col" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/INSTANCES/GEOM060b.col" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/INSTANCES/GEOM060c.col" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/INSTANCES/GEOM070a.col" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/INSTANCES/GEOM070b.col" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/INSTANCES/GEOM070c.col" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/INSTANCES/GEOM080a.col" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/INSTANCES/GEOM080b.col" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/INSTANCES/GEOM080c.col" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/INSTANCES/GEOM090a.col" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/INSTANCES/GEOM090b.col" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/INSTANCES/GEOM090c.col" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/INSTANCES/GEOM100a.col" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/INSTANCES/GEOM100b.col" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/INSTANCES/GEOM100c.col" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/INSTANCES/GEOM110a.col" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/INSTANCES/GEOM110b.col" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/INSTANCES/GEOM110c.col" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/INSTANCES/GEOM120a.col" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/INSTANCES/GEOM120b.col" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/INSTANCES/GEOM120c.col" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/INSTANCES/mysol.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/INSTANCES/rand0100a.col" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/INSTANCES/rand0100b.col" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/INSTANCES/rand0100c.col" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/INSTANCES/rand0100d.col" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/INSTANCES/rand0200a.col" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/INSTANCES/rand0200b.col" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/INSTANCES/rand0200c.col" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/INSTANCES/rand0200d.col" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/INSTANCES/rand0500a.col" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/INSTANCES/rand0500b.col" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/INSTANCES/rand0500c.col" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/INSTANCES/rand0500d.col" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/INSTANCES/rand1000a.col" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/INSTANCES/rand1000b.col" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/INSTANCES/rand1000c.col" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/INSTANCES/rand1000d.col" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/INSTANCES/test.col" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/README" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/a.out" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/main.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/main.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/mako" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HEURISTIC/mysol.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/network.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/newMain.py" beforeDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1dlMitdnuyREUzDUyLdIRodwzRg" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="PropertiesComponent">
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="newMain" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="Resources_optimization copy" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/newMain.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.newMain" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

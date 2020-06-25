@@ -109,8 +109,30 @@ def prim(nnodes, nedges, edges, startNode):
                             #if colors[e[0]-1] - edge < 0:
                             colors[nextNode-1] = colors[e[0]-1] + e[-1]"""
 
-            print('barriers', barriers)
-            lowbar = 1000
+            #print('barriers', barriers)
+
+            lowBar = 1000
+            highBar = 0
+
+            for i in barriers:
+                if i[1] != 0:
+                    low = i[1] - i[0]
+                    high = i[0] + i[1]
+                    #print('low, high',low, high, 'highbar', highBar)
+                    if low < lowBar:
+                        lowBar = low
+                    if high > highBar:
+                        #print('hello')
+                        highBar = high
+
+            #print(lowBar, highBar)
+            if lowBar > 0 and lowBar != 1000:
+                colors[nextNode-1] = lowBar
+            else:
+                colors[nextNode-1] = highBar
+            #print(colors)
+
+            """lowbar = 1000
             highbar = 0
             lowcol = []
             highcol = []
@@ -134,10 +156,10 @@ def prim(nnodes, nedges, edges, startNode):
                 colors[nextNode-1] = max(lowcol)
             else:
                 print('ella2')
-                colors[nextNode-1] = max(highcol)
+                colors[nextNode-1] = max(highcol)"""
 
 
-                """print(i)
+            """print(i)
                 if i[1] != 0:
                     sum = np.abs(i[0] - i[1])
                     print(sum)
@@ -151,7 +173,8 @@ def prim(nnodes, nedges, edges, startNode):
 
         #print('oldItem', oldItem)
         neighbors = [i for i in neighbors if i not in oldItem]
-        print('nextNode', nextNode)
+        #print('nextNode', nextNode)
+        #print('\n')
         #print('unvisited', unvisitedNodes)
         node = nextNode
         visitedNodes.append(node)
@@ -161,20 +184,37 @@ def prim(nnodes, nedges, edges, startNode):
         #print('visited nodes', visitedNodes)
 
     solVal = max(colors)
-    print("colors for startnode", startNode, ":", colors)
-    print(solVal)
-    return solVal
+    #print("colors for startnode", startNode, ":", colors)
+    #print(solVal)
+    return solVal, colors
 
 def multistart(nnodes, nedges, edges):
     solVals = []
+    allColors = []
     for node in range(1,nnodes+1):
-        solVals.append(prim(nnodes, nedges, edges, node))
-    print(solVals)
-    print(solVals.index(min(solVals))+1)
+        solval, colors = prim(nnodes, nedges, edges, node)
+        print('running for node:', node)
+        solVals.append(solval)
+        allColors.append(colors)
+
+    ind = solVals.index(min(solVals))+1
+    print('Best solution value for all nodes are:',solVals)
+    print('Starting with node', ind, 'is the best choice')
+    print('Coloring from the best starting node are',allColors[ind])
+    return solVals, solVals[ind], allColors[ind]
+
+def writeFile(filename, nnodes, solVal, colors):
+    f = open(filename, 'w')
+    f.write('%d\n' %solVal)
+    for i in range(nnodes):
+        f.write('%d\n' %colors[i])
+    f.close()
 
 def main():
     nnodes, nedges, edges = readFile('./HEURISTIC/INSTANCES/GEOM020a.col') #'./HEURISTIC/INSTANCES/test.col')
-    #multistart(nnodes, nedges, edges)
-    prim(nnodes, nedges, edges, 4)
+    solVals, solVal, colors = multistart(nnodes, nedges, edges)
+
+    writeFile('./HEURISTIC/mysol.txt', nnodes, solVal, colors)
+    #prim(nnodes, nedges, edges, 4)
 
 main()
