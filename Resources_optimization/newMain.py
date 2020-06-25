@@ -211,7 +211,7 @@ def writeFile(filename, nnodes, solVal, colors):
     f.close()
 
 def main():
-    nnodes, nedges, edges = readFile('./HEURISTIC/INSTANCES/GEOM020a.col') #'./HEURISTIC/INSTANCES/test.col')
+    nnodes, nedges, edges = readFile('./HEURISTIC/INSTANCES/GEOM100a.col') #'./HEURISTIC/INSTANCES/test.col')
     solVals, solVal, colors = multistart(nnodes, nedges, edges)
 
     writeFile('./HEURISTIC/mysol.txt', nnodes, solVal, colors)
