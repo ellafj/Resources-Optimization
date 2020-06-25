@@ -24,9 +24,6 @@ def prim(nnodes, nedges, edges, startNode):
     node = startNode #random.randint(1,nnodes)
     visitedNodes.append(node)
     unvisitedNodes.remove(node)
-    #print('hello')
-
-    #print('startnode is ', node)
 
     nextNode = -1
     oldNode = -1
@@ -35,7 +32,6 @@ def prim(nnodes, nedges, edges, startNode):
     neighbors = []
 
     while len(visitedNodes) != nnodes:
-        #print('\n')
         edge = 1000 # np.inf
         oldItem = [] # Elements that are to be removed
 
@@ -46,20 +42,15 @@ def prim(nnodes, nedges, edges, startNode):
             if node in e[:-1]:
                 neighbors.append(e)
 
-        #print('neighbors:', neighbors)
-        #print('unvisit', unvisitedNodes)
         for i in neighbors:
             # If this is the smallest edge value to date
-            #print('n', i)
             if i[0] in unvisitedNodes and i[0] != i[1]:
-                #print('yo', i[-1], colors[i[1]-1], edge)
                 if i[-1] + colors[i[1]-1] - 1 < edge:
                     nextNode = i[0]
                     oldNode = i[1]
                     edge = i[-1] #- colors[i[1]-1]
 
             elif i[1] in unvisitedNodes and i[0] != i[1]:
-                #print('yoo', i[-1], colors[i[0]-1], edge)
                 if i[-1] + colors[i[0]-1] - 1 < edge:
                     nextNode = i[1]
                     oldNode = i[0]
@@ -67,133 +58,144 @@ def prim(nnodes, nedges, edges, startNode):
 
             else:
                 oldItem.append(i)   # Adds element to be removed
-                #print("we skip")
 
-            #print('next node:', nextNode, 'with cost', edge, '\n')
-
-        #print('edge', edge)
         # If no new node that fulfills our conditions
         if edge == 1000:
             nextNode = unvisitedNodes[0]#random.randint(0,len(unvisitedNodes)-1)]
-            #print('we start in new loop with node', nextNode)
             colors[int(nextNode)-1] = 1
 
         # Sets color for the next node we are to visit
         else:
-            #print('colors[oldNode-1]', colors[oldNode-1])
             if colors[oldNode-1] - edge < 0:
-                #print('hel')
                 colors[nextNode-1] = colors[oldNode-1] + edge
             else:
-                #print('he')
                 colors[nextNode-1] = colors[oldNode-1] - edge
-            #print('colors',colors)
 
-            barriers = []
-            for e in edges:
-                if nextNode in e[:-1]:
-                    if nextNode == e[0] and nextNode != e[1]: #and oldNode != e[1]
-                        #print('e=',e)
-                        barriers.append([e[-1], colors[e[1]-1]])
-                        """if np.abs(colors[e[1]-1] - colors[nextNode-1]) < e[-1] and colors[e[1]-1] != 0:
-                            print('e', e)
-                            print('hello', colors[e[1]-1], e[-1], colors[nextNode-1])
-                            colors[nextNode-1] = colors[e[1]-1] + e[-1]"""
+            colors = evaluateEdges(edges, [0,0,0], nextNode, colors)
 
-                    elif nextNode == e[1] and nextNode != e[0]: #and oldNode != e[0]
-                        #print('e=',e)
-                        barriers.append([e[-1], colors[e[0]-1]])
-                        """if np.abs(colors[e[0]-1] - colors[nextNode-1]) < e[-1] and colors[e[0]-1] != 0:
-                            print('e', e)
-                            print('hey', colors[e[0]-1], e[-1], colors[nextNode-1])
-                            #if colors[e[0]-1] - edge < 0:
-                            colors[nextNode-1] = colors[e[0]-1] + e[-1]"""
-
-            #print('barriers', barriers)
-
-            lowBar = 1000
-            highBar = 0
-
-            for i in barriers:
-                if i[1] != 0:
-                    low = i[1] - i[0]
-                    high = i[0] + i[1]
-                    #print('low, high',low, high, 'highbar', highBar)
-                    if low < lowBar:
-                        lowBar = low
-                    if high > highBar:
-                        #print('hello')
-                        highBar = high
-
-            #print(lowBar, highBar)
-            if lowBar > 0 and lowBar != 1000:
-                colors[nextNode-1] = lowBar
-            else:
-                colors[nextNode-1] = highBar
-            #print(colors)
-
-            """lowbar = 1000
-            highbar = 0
-            lowcol = []
-            highcol = []
-            for i in barriers:
-                if i[1] != 0:
-                    highcol.append(i[1] + i[0])
-                    if i[1] - i[0] > 0:
-                        lowcol.append(i[1]-i[0])
-                        if i[1] - i[0] < lowbar:
-                            lowbar = i[1] - i[0]
-                    if i[0] + i[1] > highbar:
-                        highbar = i[0] + i[1]
-
-            print('lowbar', lowbar, 'highbar', highbar)
-            print('lowcol', lowcol, 'highcol', highcol)
-            if lowbar <= highbar and (lowbar >= min(highcol)):# or len(highcol) == 1):
-                print('ella')
-                colors[nextNode-1] = max(highcol)#min(lowcol)
-            elif len(lowcol) > 0 and len(highcol) > 0 and max(lowcol) == min(highcol):
-                print('ella1')
-                colors[nextNode-1] = max(lowcol)
-            else:
-                print('ella2')
-                colors[nextNode-1] = max(highcol)"""
-
-
-            """print(i)
-                if i[1] != 0:
-                    sum = np.abs(i[0] - i[1])
-                    print(sum)
-                    if bar < sum:
-                        print('sum', sum)
-                        bar = sum
-                        col = i[0] + i[1]
-                        print('col', col)
-            if col != 0:
-                colors[nextNode-1] = col"""
-
-        #print('oldItem', oldItem)
         neighbors = [i for i in neighbors if i not in oldItem]
-        #print('nextNode', nextNode)
-        #print('\n')
-        #print('unvisited', unvisitedNodes)
         node = nextNode
         visitedNodes.append(node)
         unvisitedNodes.remove(node)
 
-        #print('colors', colors)
-        #print('visited nodes', visitedNodes)
-
     solVal = max(colors)
-    #print("colors for startnode", startNode, ":", colors)
-    #print(solVal)
     return solVal, colors
 
-def multistart(nnodes, nedges, edges):
+
+
+def kruskal(nnodes, nedges, edges):
+    visitedNodes = []
+    unvisitedNodes = [i+1 for i in range(nnodes)]
+
+    colors = [0 for i in range(nnodes)] # Initializes colors
+    print('nedges', nedges)
+
+    for i in range(nedges-1):
+        e = edges[i]
+        e = [int(e[x]) for x in range(3)]
+        edges[i] = e
+
+    while len(visitedNodes) != nnodes:
+        option = False
+
+        while option == False:
+            print('edges', edges)
+            index = random.randint(0,len(edges)-1)
+            edge = edges[index]
+            if edge[0] in unvisitedNodes or edge[1] in unvisitedNodes:
+                option = True
+
+            edges.remove(edge)
+
+        print('\nevaluating edge', edge)
+        print('visited nodes', visitedNodes)
+
+        if edge[0] in unvisitedNodes and edge[1] in unvisitedNodes:
+            print('hello1')
+            colors[edge[0]-1] = 1
+            colors = evaluateEdges(edges, edge, edge[1], colors)
+            visitedNodes.append(edge[1])
+            visitedNodes.append(edge[0])
+            unvisitedNodes.remove(edge[1])
+            unvisitedNodes.remove(edge[0])
+
+        elif edge[0] in visitedNodes:
+            print('hello2')
+            colors = evaluateEdges(edges, edge, edge[1], colors)
+            visitedNodes.append(edge[1])
+            unvisitedNodes.remove(edge[1])
+
+        elif edge[1] in visitedNodes:
+            print('hello3')
+            colors = evaluateEdges(edges, edge, edge[0], colors)
+            visitedNodes.append(edge[0])
+            unvisitedNodes.remove(edge[0])
+        print(colors)
+
+    solVal = max(colors)
+    return solVal, colors
+
+
+
+
+def evaluateEdges(edges, edge, node, colors):
+    barriers = []
+    print('evaluating node', node)
+    for e in edges:
+        if node in e[:-1]:
+            if node == e[0] and node != e[1]: #and oldNode != e[1]
+                barriers.append([e[-1], colors[e[1]-1]])
+
+            elif node == e[1] and node != e[0]: #and oldNode != e[0]
+                barriers.append([e[-1], colors[e[0]-1]])
+
+    lowBar = 1000
+    highBar = 0
+    print('barriers', barriers)
+    count = 0
+
+    for i in barriers:
+        if i[1] != 0:
+            low = i[1] - i[0]
+            high = i[0] + i[1]
+            if low < lowBar:
+                lowBar = low
+            if high > highBar:
+                highBar = high
+        else:
+            count += 1
+
+    if count == len(barriers):
+        print('yo', edge[-1])
+        colors[node-1] = edge[-1] + np.abs(edge[0] - edge[1])
+    else:
+        if lowBar > 0 and lowBar != 1000:
+            colors[node-1] = lowBar
+        else:
+            colors[node-1] = highBar
+
+    return colors
+
+def prim_multistart(nnodes, nedges, edges):
     solVals = []
     allColors = []
     for node in range(1,nnodes+1):
         solval, colors = prim(nnodes, nedges, edges, node)
         print('running for node:', node)
+        solVals.append(solval)
+        allColors.append(colors)
+
+    ind = solVals.index(min(solVals))+1
+    print('Best solution value for all nodes are:',solVals)
+    print('Starting with node', ind, 'is the best choice')
+    print('Coloring from the best starting node are',allColors[ind])
+    return solVals, solVals[ind], allColors[ind]
+
+def kruskal_multistart(nnodes, nedges, edges, iter):
+    solVals = []
+    allColors = []
+    for node in range(1,iter):
+        solval, colors = kruskal(nnodes, nedges, edges)
         solVals.append(solval)
         allColors.append(colors)
 
@@ -211,9 +213,10 @@ def writeFile(filename, nnodes, solVal, colors):
     f.close()
 
 def main():
-    nnodes, nedges, edges = readFile('./HEURISTIC/INSTANCES/GEOM100a.col') #'./HEURISTIC/INSTANCES/test.col')
-    solVals, solVal, colors = multistart(nnodes, nedges, edges)
-
+    nnodes, nedges, edges = readFile('./HEURISTIC/INSTANCES/test.col') #'./HEURISTIC/INSTANCES/test.col')
+    #solVals, solVal, colors = multistart(nnodes, nedges, edges)
+    iter = 10
+    solVal, colors = kruskal_multistart(nnodes, nedges, edges, iter)
     writeFile('./HEURISTIC/mysol.txt', nnodes, solVal, colors)
     #prim(nnodes, nedges, edges, 4)
 
