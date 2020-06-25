@@ -21,7 +21,7 @@ def prim(nnodes, nedges, edges):
     visitedNodes = []
     unvisitedNodes = [i+1 for i in range(nnodes)]
 
-    node = 3 #random.randint(1,nnodes)
+    node = 1 #random.randint(1,nnodes)
     visitedNodes.append(node)
     unvisitedNodes.remove(node)
 
@@ -40,14 +40,10 @@ def prim(nnodes, nedges, edges):
 
         for i in range(nedges):
             e = edges[i]
-            edges[i] = [int(e[x]) for x in range(3)]
+            e = [int(e[x]) for x in range(3)]
+            edges[i] = e
             if node in e[:-1]:
                 neighbors.append(e)
-
-            if i+1 in visitedNodes:
-               print('i+1', i+1)
-
-
 
         print('neighbors:', neighbors)
         for i in neighbors:
@@ -80,8 +76,28 @@ def prim(nnodes, nedges, edges):
 
         # Sets color for the next node we are to visit
         else:
-            colors[int(nextNode)-1] = edge + colors[int(oldNode)-1]
-
+            if colors[oldNode-1] - edge < 0:
+                colors[nextNode-1] = colors[oldNode-1] + edge
+            else:
+                colors[nextNode-1] = colors[oldNode-1] - edge
+            for e in edges:
+                if nextNode in e[:-1]:
+                    if nextNode == e[0] and oldNode != e[1]:
+                        if colors[e[1]-1] + e[-1] > colors[nextNode-1]:
+                            print('e', e)
+                            print('hello', colors[e[1]-1], e[-1], colors[nextNode-1])
+                            #if colors[e[1]-1] - edge < 0:
+                            colors[nextNode-1] = colors[e[1]-1] + e[-1]
+                            #else:
+                                #colors[nextNode-1] = colors[e[1]-1] - e[-1]
+                    elif nextNode == e[1] and oldNode != e[0]:
+                        if colors[e[0]-1] + e[-1] > colors[nextNode-1]:
+                            print('e', e)
+                            print('hey', colors[e[0]-1], e[-1], colors[nextNode-1])
+                            #if colors[e[0]-1] - edge < 0:
+                            colors[nextNode-1] = colors[e[0]-1] + e[-1]
+                            #else:
+                                #colors[nextNode-1] = colors[e[0]-1] - e[-1]
 
         neighbors = [i for i in neighbors if i not in oldItem]
         node = nextNode
