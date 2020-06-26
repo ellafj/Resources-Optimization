@@ -89,50 +89,79 @@ def kruskal(nnodes, nedges, edges):
 
     colors = [0 for i in range(nnodes)] # Initializes colors
     print('nedges', nedges)
+    print('edges', edges)
 
-    for i in range(nedges-1):
-        e = edges[i]
+    edges_copy = edges
+
+    for i in range(nedges):
+        e = edges_copy[i]
         e = [int(e[x]) for x in range(3)]
-        edges[i] = e
+        edges_copy[i] = e
+
+    sortedEdges = sorted(edges_copy, key=lambda l:l[-1])
+    print('sorted egdes', sortedEdges)
 
     while len(visitedNodes) != nnodes:
-        option = False
+        if len(unvisitedNodes) == 1 and len(edges_copy) == 0:
+            print('only one node left', unvisitedNodes[0])
+            colors[unvisitedNodes[0]-1] = 1
+            visitedNodes.append(unvisitedNodes[0])
+        else:
+            option = False
 
-        while option == False:
-            print('edges', edges)
-            index = random.randint(0,len(edges)-1)
-            edge = edges[index]
-            if edge[0] in unvisitedNodes or edge[1] in unvisitedNodes:
-                option = True
+            """while option == False:
+                print('edges', edges_copy)
+                print('unvisit', unvisitedNodes)
+                index = random.randint(0,len(edges_copy)-1)
+                edge = edges_copy[index]
+                if (edge[0]) in unvisitedNodes or (edge[1]) in unvisitedNodes:
+                    print('edge[0]', edge[0], 'edge[1]', edge[1])
+                    option = True
+                edges_copy.remove(edge)"""
 
-            edges.remove(edge)
+            while option == False:
+                print('sorted edges in loop', sortedEdges)
+                edge = sortedEdges[0]
+                if (edge[0] in unvisitedNodes or edge[1] in unvisitedNodes) and edge[0] != edge[1]:
+                    print('evaluating edge', edge)
+                    option = True
+                sortedEdges.remove(edge)
 
-        print('\nevaluating edge', edge)
-        print('visited nodes', visitedNodes)
+            print('\nevaluating edge', edge)
+            print('visited nodes', visitedNodes)
+            print('unvisted nodes', unvisitedNodes)
 
-        if edge[0] in unvisitedNodes and edge[1] in unvisitedNodes:
-            print('hello1')
-            colors[edge[0]-1] = 1
-            colors = evaluateEdges(edges, edge, edge[1], colors)
-            visitedNodes.append(edge[1])
-            visitedNodes.append(edge[0])
-            unvisitedNodes.remove(edge[1])
-            unvisitedNodes.remove(edge[0])
+            """if edge[0] == edge[1]:
+                print('hello, this edge doesnt matter')
+                visitedNodes.append(edge[0])
+                unvisitedNodes.remove(edge[0])"""
 
-        elif edge[0] in visitedNodes:
-            print('hello2')
-            colors = evaluateEdges(edges, edge, edge[1], colors)
-            visitedNodes.append(edge[1])
-            unvisitedNodes.remove(edge[1])
+            if edge[0] in unvisitedNodes and edge[1] in unvisitedNodes:
+                print('hello1')
+                #colors[edge[0]-1] = 1
+                colors = evaluateEdges(edges_copy, edge, edge[0], colors)
+                colors = evaluateEdges(edges_copy, edge, edge[1], colors)
+                visitedNodes.append(edge[1])
+                visitedNodes.append(edge[0])
+                unvisitedNodes.remove(edge[1])
+                unvisitedNodes.remove(edge[0])
 
-        elif edge[1] in visitedNodes:
-            print('hello3')
-            colors = evaluateEdges(edges, edge, edge[0], colors)
-            visitedNodes.append(edge[0])
-            unvisitedNodes.remove(edge[0])
-        print(colors)
+            elif edge[0] in visitedNodes:
+                print('hello2')
+                colors = evaluateEdges(edges_copy, edge, edge[1], colors)
+                visitedNodes.append(edge[1])
+                unvisitedNodes.remove(edge[1])
+
+            elif edge[1] in visitedNodes:
+                print('hello3')
+                colors = evaluateEdges(edges_copy, edge, edge[0], colors)
+                visitedNodes.append(edge[0])
+                unvisitedNodes.remove(edge[0])
+
+            print(colors)
 
     solVal = max(colors)
+    print('colors:', colors)
     return solVal, colors
 
 
@@ -191,10 +220,14 @@ def prim_multistart(nnodes, nedges, edges):
     print('Coloring from the best starting node are',allColors[ind])
     return solVals, solVals[ind], allColors[ind]
 
-def kruskal_multistart(nnodes, nedges, edges, iter):
+def kruskal_multistart(nnodes, nedges, edges, iter, filename):
+    #nnodes, nedges, edges = readFile(filename)
     solVals = []
     allColors = []
     for node in range(1,iter):
+        nnodes, nedges, edges = readFile(filename)
+        print('node iter', node)
+        print('edges in main', edges)
         solval, colors = kruskal(nnodes, nedges, edges)
         solVals.append(solval)
         allColors.append(colors)
@@ -213,10 +246,11 @@ def writeFile(filename, nnodes, solVal, colors):
     f.close()
 
 def main():
-    nnodes, nedges, edges = readFile('./HEURISTIC/INSTANCES/test.col') #'./HEURISTIC/INSTANCES/test.col')
+    nnodes, nedges, edges = readFile('./HEURISTIC/INSTANCES/GEOM020b.col') #'./HEURISTIC/INSTANCES/test.col')
     #solVals, solVal, colors = multistart(nnodes, nedges, edges)
-    iter = 10
-    solVal, colors = kruskal_multistart(nnodes, nedges, edges, iter)
+    iter = 2
+    #solVals, solVal, colors = kruskal_multistart(nnodes, nedges, edges, iter, './HEURISTIC/INSTANCES/test.col')
+    solVal, colors = kruskal(nnodes, nedges, edges)
     writeFile('./HEURISTIC/mysol.txt', nnodes, solVal, colors)
     #prim(nnodes, nedges, edges, 4)
 
