@@ -358,7 +358,7 @@ def writeFile(filename, nnodes, solVal, colors):
     f.close()
 
 def main():
-    directory = './HEURISTIC/INSTANCES/'#'./HEURISTIC/INSTANCES/'
+    directory = './HEURISTIC/test2/'#'./HEURISTIC/INSTANCES/'
     for filename in os.listdir(directory):
         print(filename)
         if filename != 'mysol.txt':
@@ -367,8 +367,8 @@ def main():
             if iter > 100:
                 iter = 10
             print(iter)
-            solVals, solVal, colors = kruskal_multistart(iter, directory + filename)
-            solname = './HEURISTIC/RandomEdgeSolutions/' + filename.replace('.col', '') + '_sol.txt'
+            solVal, colors = kruskal(nnodes, nedges, edges)
+            solname = './HEURISTIC/SolutionsKruskal/' + filename.replace('.col', '') + '_sol.txt'
             writeFile(solname, nnodes, solVal, colors)
 
     #nnodes, nedges, edges = readFile('./HEURISTIC/INSTANCES/test.col')

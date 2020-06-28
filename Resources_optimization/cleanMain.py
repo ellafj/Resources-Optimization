@@ -87,26 +87,31 @@ def prim_multistart(nnodes, nedges, edges, iter):
 
 ## Method 2 ##
 def kruskal(nnodes, nedges, edges):
+    # Initializing variables
     visitedNodes = []
     unvisitedNodes = [i+1 for i in range(nnodes)]
-
-    colors = [0 for i in range(nnodes)] # Initializes colors
+    colors = [0 for i in range(nnodes)]
     edges_copy = edges # Making sure we're not overwriting original edges
 
+    # Turning edges from strings to integers
     for i in range(nedges):
         e = edges_copy[i]
         e = [int(e[x]) for x in range(3)]
         edges_copy[i] = e
 
+    # Sorts edges from lowest cost to highest cost
     sortedEdges = sorted(edges_copy, key=lambda l:l[-1])
 
+    # While there are still nodes that are not colored
     while len(visitedNodes) != nnodes:
+        # If we are in last element
         if len(unvisitedNodes) == 1 and len(sortedEdges) == 0:
             colors[unvisitedNodes[0]-1] = 1
             visitedNodes.append(unvisitedNodes[0])
+
         else:
             option = False
-
+            # Check if node has been visited before
             while option == False:
                 if len(sortedEdges) == 0:
                     colors[unvisitedNodes[0]-1] = 1
@@ -144,27 +149,31 @@ def kruskal(nnodes, nedges, edges):
 
 ## Method 3 ##
 def randomEdges(nnodes, nedges, edges):
+    # Initializing variables
     visitedNodes = []
     unvisitedNodes = [i+1 for i in range(nnodes)]
-
-    colors = [0 for i in range(nnodes)] # Initializes colors
+    colors = [0 for i in range(nnodes)]
     edges_copy = edges # Making sure we're not overwriting original edges
 
+    # Turning edges from strings to integers
     for i in range(nedges):
         e = edges_copy[i]
         e = [int(e[x]) for x in range(3)]
         edges_copy[i] = e
 
+    # Sorts edges in random order
     random.shuffle(edges_copy)
     shuffledEdges = edges_copy
 
+    # While not all nodes have been colored
     while len(visitedNodes) != nnodes:
+        # If we are in last element
         if len(unvisitedNodes) == 1 and len(shuffledEdges) == 0:
             colors[unvisitedNodes[0]-1] = 1
             visitedNodes.append(unvisitedNodes[0])
         else:
             option = False
-
+            # Checks if node has been visited before
             while option == False:
                 if len(shuffledEdges) == 0:
                     colors[unvisitedNodes[0]-1] = 1
@@ -201,8 +210,10 @@ def randomEdges(nnodes, nedges, edges):
     return solVal, colors
 
 def edges_multistart(iter, filename):
+    # Initializing variables
     solVals = []
     allColors = []
+
     for node in range(1,iter):
         nnodes, nedges, edges = readFile(filename)
         solval, colors = randomEdges(nnodes, nedges, edges)
@@ -216,11 +227,16 @@ def edges_multistart(iter, filename):
 
 ## Supplying functions ##
 def readFile(filename):
+    # Opens file
     f = open(filename, 'r')
     lines = f.readlines()
+
+    # Initializing variables
     edges = []
     nnodes = 0
     nedges = 0
+
+    # Collecting info from file
     for line in lines:
         line = line.split()
         if line[0] == 'p':
@@ -228,10 +244,12 @@ def readFile(filename):
             nedges = line[3]
         elif line[0] == 'e':
             edges.append(line[1:])
+
     f.close()
     return int(nnodes), int(nedges), edges
 
 def writeFile(filename, nnodes, solVal, colors):
+    # Writes solution to file
     f = open(filename, 'w')
     f.write('%d\n' %solVal)
     for i in range(nnodes):
@@ -240,6 +258,7 @@ def writeFile(filename, nnodes, solVal, colors):
 
 def evaluateEdges(edges, edge, node, colors):
     barriers = []
+    # Sorts through edges to find cost of edges and colors of nodes that have been visited
     for e in edges:
         if node in e[:-1]:
             if node == e[0] and node != e[1]:
@@ -248,13 +267,13 @@ def evaluateEdges(edges, edge, node, colors):
             elif node == e[1] and node != e[0]:
                 barriers.append([e[-1], colors[e[0]-1]])
 
+    # Initializes variables
     lowBar = 1000
     highBar = 0
     count = 0
-    #print('node', node)
 
+    # Calculates correct color for node
     for i in barriers:
-        #print('bar', barriers)
         if i[1] != 0:
             low = i[1] - i[0]
             high = i[0] + i[1]
@@ -265,7 +284,7 @@ def evaluateEdges(edges, edge, node, colors):
         else:
             count += 1
 
-    #print('lh',lowBar, highBar)
+    # Sets color
     if count == len(barriers):
         colors[node-1] = edge[-1] + np.abs(edge[0] - edge[1])
     else:
@@ -281,11 +300,11 @@ def evaluateEdges(edges, edge, node, colors):
 if __name__ == '__main__':
     method = 1 # 1 for method 1, 2 for method 2, 3 for method 3
     path = '/Users/ellajohnsen/Documents/GitHub/ResourcesOptimization/Resources-Optimization/Resources_optimization/HEURISTIC/'
-    directory = 'INSTANCES/'
+    directory = 'test2/'
 
     if method == 1:
         for filename in os.listdir(path + directory):
-            if filename != 'rand1000a.col' and filename != 'rand1000d.col':
+            if filename != 'rand1000b.col' and filename != 'rand1000c.col':
                 print('Currently working on file:', filename)
                 nnodes, nedges, edges = readFile(path + directory + filename)
                 iter = int(np.ceil(nnodes/2))
