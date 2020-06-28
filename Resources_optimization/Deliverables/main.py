@@ -299,7 +299,7 @@ def evaluateEdges(edges, edge, node, colors):
 ## Running the code ##
 if __name__ == '__main__':
     method = 1 # 1 for method 1, 2 for method 2, 3 for method 3
-    directory = './HEURISTIC/INSTANCES'
+    directory = './INSTANCES'
 
     if method == 1:
         for filename in os.listdir(directory):
@@ -310,7 +310,7 @@ if __name__ == '__main__':
                 if iter > 50: # As code goes very slow for 500 nodes and upwards. Can be removed
                     iter = 10
                 solVals, solVal, colors = prim_multistart(nnodes, nedges, edges, iter)
-                solname = '/HEURISTIC/Solutions/PrimSolutions/' + filename.replace('.col', '') + '_sol.txt'
+                solname = './Solutions/PrimSolutions/' + filename.replace('.col', '') + '_sol.txt'
                 writeFile(solname, nnodes, solVal, colors)
 
     elif method == 2:
@@ -318,7 +318,7 @@ if __name__ == '__main__':
             print('Currently working on file:', filename)
             nnodes, nedges, edges = readFile(directory + filename)
             solVal, colors = kruskal(nnodes, nedges, edges)
-            solname = './HEURISTIC/Solutions/KruskalSolutions/' + filename.replace('.col', '') + '_sol.txt'
+            solname = './Solutions/KruskalSolutions/' + filename.replace('.col', '') + '_sol.txt'
             writeFile(solname, nnodes, solVal, colors)
 
     elif method == 3:
@@ -329,7 +329,7 @@ if __name__ == '__main__':
             if iter > 100: # As code goes very slow for 500 nodes and upwards. Can be removed
                 iter = 10
             solVals, solVal, colors = edges_multistart(iter, directory + filename)
-            solname = './HEURISTIC/Solutions/RandomEdgeSolutions/' + filename.replace('.col', '') + '_sol.txt'
+            solname = './Solutions/RandomEdgeSolutions/' + filename.replace('.col', '') + '_sol.txt'
             writeFile(solname, nnodes, solVal, colors)
 
 
