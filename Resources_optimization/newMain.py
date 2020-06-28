@@ -82,8 +82,6 @@ def prim(nnodes, nedges, edges, startNode):
     solVal = max(colors)
     return solVal, colors
 
-
-
 def kruskal(nnodes, nedges, edges):
     visitedNodes = []
     unvisitedNodes = [i+1 for i in range(nnodes)]
@@ -149,7 +147,77 @@ def kruskal(nnodes, nedges, edges):
     solVal = max(colors)
     return solVal, colors
 
+def randomEdges(nnodes, nedges, edges):
+    visitedNodes = []
+    unvisitedNodes = [i+1 for i in range(nnodes)]
 
+    colors = [0 for i in range(nnodes)] # Initializes colors
+    edges_copy = edges # Making sure we're not overwriting original edges
+
+    for i in range(nedges):
+        e = edges_copy[i]
+        e = [int(e[x]) for x in range(3)]
+        edges_copy[i] = e
+
+    random.shuffle(edges_copy)
+    shuffledEdges = edges_copy
+    #print(shuffledEdges)
+
+    while len(visitedNodes) != nnodes:
+        #print('sortedEdges', sortedEdges)
+        if len(unvisitedNodes) == 1 and len(shuffledEdges) == 0: #len(edges_copy) == 0:
+            #print('hei')
+            colors[unvisitedNodes[0]-1] = 1
+            visitedNodes.append(unvisitedNodes[0])
+        else:
+            option = False
+
+            while option == False:
+                if len(shuffledEdges) == 0:
+                    colors[unvisitedNodes[0]-1] = 1
+                    return max(colors), colors
+                edge = shuffledEdges[0]
+                #print('edge', edge)
+                if (edge[0] in unvisitedNodes or edge[1] in unvisitedNodes) and edge[0] != edge[1]:
+                    #option = True
+                    break
+                shuffledEdges.remove(edge)
+
+            if edge[0] in unvisitedNodes and edge[1] in unvisitedNodes:
+                if all(v == 0 for v in colors):
+                    #print('hello10')
+                    colors[edge[0]-1] = 1
+                    colors[edge[1]-1] = edge[-1]+1
+                else:
+                    #print('hello11')
+                    colors = evaluateEdges(edges_copy, edge, edge[0], colors)
+                    colors = evaluateEdges(edges_copy, edge, edge[1], colors)
+                visitedNodes.append(edge[1])
+                visitedNodes.append(edge[0])
+                unvisitedNodes.remove(edge[1])
+                unvisitedNodes.remove(edge[0])
+
+            elif edge[0] in visitedNodes:
+                #print('hello2')
+                colors = evaluateEdges(edges_copy, edge, edge[1], colors)
+                visitedNodes.append(edge[1])
+                unvisitedNodes.remove(edge[1])
+
+            elif edge[1] in visitedNodes:
+                #print('hello3')
+                colors = evaluateEdges(edges_copy, edge, edge[0], colors)
+                visitedNodes.append(edge[0])
+                unvisitedNodes.remove(edge[0])
+            #print('colors', colors)
+            #print(visitedNodes)
+            #print(unvisitedNodes)
+            shuffledEdges.remove(edge)
+
+    #print('colors:', colors)
+    solVal = max(colors)
+    return solVal, colors
+
+"""
 def randomEdges(nnodes, nedges, edges):
     visitedNodes = []
     unvisitedNodes = [i+1 for i in range(nnodes)]
@@ -210,7 +278,7 @@ def randomEdges(nnodes, nedges, edges):
     solVal = max(colors)
     print('colors:', colors)
     return solVal, colors
-
+"""
 
 def evaluateEdges(edges, edge, node, colors):
     barriers = []
@@ -265,22 +333,22 @@ def prim_multistart(nnodes, nedges, edges):
     print('Coloring from the best starting node are',allColors[ind])
     return solVals, solVals[ind], allColors[ind]
 
-def kruskal_multistart(nnodes, nedges, edges, iter, filename):
-    nnodes, nedges, edges = readFile(filename)
+def kruskal_multistart(iter, filename):
+    #nnodes, nedges, edges = readFile(filename)
     solVals = []
     allColors = []
-    #for node in range(1,iter):
-    #print('node iter', node)
-    #print('edges in main', edges)
-    solval, colors = randomEdges(nnodes, nedges, edges)
-    solVals.append(solval)
-    allColors.append(colors)
+    for node in range(1,iter):
+        nnodes, nedges, edges = readFile(filename)
+        solval, colors = randomEdges(nnodes, nedges, edges)
+        solVals.append(solval)
+        allColors.append(colors)
+        print('Solution found:', solval)
 
-   # ind = solVals.index(min(solVals))+1
-    print('Best solution value for all nodes are:',solVals)
+    ind = solVals.index(min(solVals))
+    print('Best solution value for all nodes are:',solVals, '\n')
     #print('Starting with node', ind, 'is the best choice')
     #print('Coloring from the best starting node are',allColors[ind])
-    return solVals#, solVals[ind], allColors[ind]
+    return solVals, solVals[ind], allColors[ind]
 
 def writeFile(filename, nnodes, solVal, colors):
     f = open(filename, 'w')
@@ -290,20 +358,25 @@ def writeFile(filename, nnodes, solVal, colors):
     f.close()
 
 def main():
-    directory = './HEURISTIC/INSTANCES/'
+    directory = './HEURISTIC/INSTANCES/'#'./HEURISTIC/INSTANCES/'
     for filename in os.listdir(directory):
         print(filename)
         if filename != 'mysol.txt':
             nnodes, nedges, edges = readFile(directory + filename)
-            solVal, colors = kruskal(nnodes, nedges, edges)
-            solname = './HEURISTIC/Solutions/' + filename.replace('.', '_') + '_sol.txt'
+            iter = int(np.ceil(nnodes/2))
+            if iter > 100:
+                iter = 10
+            print(iter)
+            solVals, solVal, colors = kruskal_multistart(iter, directory + filename)
+            solname = './HEURISTIC/RandomEdgeSolutions/' + filename.replace('.col', '') + '_sol.txt'
             writeFile(solname, nnodes, solVal, colors)
 
-    #nnodes, nedges, edges = readFile('./HEURISTIC/INSTANCES/GEOM020a.col') #'./HEURISTIC/INSTANCES/test.col')
+    #nnodes, nedges, edges = readFile('./HEURISTIC/INSTANCES/test.col')
     #solVals, solVal, colors = multistart(nnodes, nedges, edges)
-    #iter = 2
+    #iter = 10
     #solVals = kruskal_multistart(nnodes, nedges, edges, iter, './HEURISTIC/INSTANCES/test.col')
     #solVal, colors = kruskal(nnodes, nedges, edges)
+    #solVal, colors = randomEdges(nnodes, nedges, edges)
     #print(solVals)
     #print(solVal)
     #print(colors)
