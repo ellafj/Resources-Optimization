@@ -5,23 +5,24 @@ import os
 
 ## Method 1 ##
 def prim(nnodes, nedges, edges, startNode):
+    # Initializing variables
     visitedNodes = []
     unvisitedNodes = [i+1 for i in range(nnodes)]
-
-    node = startNode #random.randint(1,nnodes)
+    node = startNode
     visitedNodes.append(node)
     unvisitedNodes.remove(node)
-
     nextNode = -1
     oldNode = -1
     colors = [0 for i in range(nnodes)] # Initializes colors
     colors[int(node)-1] = 1 # Sets initial value of node to 1
     neighbors = []
 
+    # While there are still uncolored nodes
     while len(visitedNodes) != nnodes:
-        edge = 1000 # np.inf
+        edge = 1000 # Initial value of edge, set to be high to make sure it's replaced
         oldItem = [] # Elements that are to be removed
 
+        # Turning edges into integers instead of strings and defines neighbors of node
         for i in range(nedges):
             e = edges[i]
             e = [int(e[x]) for x in range(3)]
@@ -29,26 +30,26 @@ def prim(nnodes, nedges, edges, startNode):
             if node in e[:-1]:
                 neighbors.append(e)
 
+        # Iterates through neighbouring nodes
         for i in neighbors:
-            # If this is the smallest edge value to date
             if i[0] in unvisitedNodes and i[0] != i[1]:
                 if i[-1] + colors[i[1]-1] - 1 < edge:
                     nextNode = i[0]
                     oldNode = i[1]
-                    edge = i[-1] #- colors[i[1]-1]
+                    edge = i[-1]
 
             elif i[1] in unvisitedNodes and i[0] != i[1]:
                 if i[-1] + colors[i[0]-1] - 1 < edge:
                     nextNode = i[1]
                     oldNode = i[0]
-                    edge = i[-1] #- colors[i[0]-1]
+                    edge = i[-1]
 
             else:
-                oldItem.append(i)   # Adds element to be removed
+                oldItem.append(i)
 
-        # If no new node that fulfills our conditions
+        # If there was no node that satisfied our conditions
         if edge == 1000:
-            nextNode = unvisitedNodes[0]#random.randint(0,len(unvisitedNodes)-1)]
+            nextNode = unvisitedNodes[0]
             colors[int(nextNode)-1] = 1
 
         # Sets color for the next node we are to visit
@@ -69,18 +70,18 @@ def prim(nnodes, nedges, edges, startNode):
     return solVal, colors
 
 def prim_multistart(nnodes, nedges, edges, iter):
+    # Initializing variables
     solVals = []
     allColors = []
+
     for node in range(1,iter):
         solval, colors = prim(nnodes, nedges, edges, node)
         print('running for node:', node)
         solVals.append(solval)
         allColors.append(colors)
 
-    ind = solVals.index(min(solVals))+1
-    print('Best solution value for all nodes are:',solVals)
-    print('Starting with node', ind, 'is the best choice')
-    print('Coloring from the best starting node are',allColors[ind])
+    ind = solVals.index(min(solVals))
+    print('Best result is',allColors[ind])
     return solVals, solVals[ind], allColors[ind]
 
 
@@ -100,9 +101,7 @@ def kruskal(nnodes, nedges, edges):
     sortedEdges = sorted(edges_copy, key=lambda l:l[-1])
 
     while len(visitedNodes) != nnodes:
-        #print('sortedEdges', sortedEdges)
-        if len(unvisitedNodes) == 1 and len(sortedEdges) == 0: #len(edges_copy) == 0:
-            #print('hei')
+        if len(unvisitedNodes) == 1 and len(sortedEdges) == 0:
             colors[unvisitedNodes[0]-1] = 1
             visitedNodes.append(unvisitedNodes[0])
         else:
@@ -119,11 +118,9 @@ def kruskal(nnodes, nedges, edges):
 
             if edge[0] in unvisitedNodes and edge[1] in unvisitedNodes:
                 if all(v == 0 for v in colors):
-                    #print('hello10')
                     colors[edge[0]-1] = 1
                     colors[edge[1]-1] = edge[-1]+1
                 else:
-                    #print('hello11')
                     colors = evaluateEdges(edges_copy, edge, edge[0], colors)
                     colors = evaluateEdges(edges_copy, edge, edge[1], colors)
                 visitedNodes.append(edge[1])
@@ -132,21 +129,15 @@ def kruskal(nnodes, nedges, edges):
                 unvisitedNodes.remove(edge[0])
 
             elif edge[0] in visitedNodes:
-                #print('hello2')
                 colors = evaluateEdges(edges_copy, edge, edge[1], colors)
                 visitedNodes.append(edge[1])
                 unvisitedNodes.remove(edge[1])
 
             elif edge[1] in visitedNodes:
-                #print('hello3')
                 colors = evaluateEdges(edges_copy, edge, edge[0], colors)
                 visitedNodes.append(edge[0])
                 unvisitedNodes.remove(edge[0])
-            #print('colors', colors)
-            #print(visitedNodes)
-            #print(unvisitedNodes)
 
-    print('colors:', colors)
     solVal = max(colors)
     return solVal, colors
 
@@ -294,14 +285,15 @@ if __name__ == '__main__':
 
     if method == 1:
         for filename in os.listdir(path + directory):
-            print('Currently working on file:', filename)
-            nnodes, nedges, edges = readFile(path + directory + filename)
-            iter = int(np.ceil(nnodes/2))
-            if iter > 100: # As code goes very slow for 500 nodes and upwards. Can be removed
-                iter = 10
-            solVals, solVal, colors = prim_multistart(nnodes, nedges, edges, iter)
-            solname = path + 'Solutions/PrimSolutions/' + filename.replace('.col', '') + '_sol.txt'
-            writeFile(solname, nnodes, solVal, colors)
+            if filename != 'rand1000a.col' and filename != 'rand1000d.col':
+                print('Currently working on file:', filename)
+                nnodes, nedges, edges = readFile(path + directory + filename)
+                iter = int(np.ceil(nnodes/2))
+                if iter > 50: # As code goes very slow for 500 nodes and upwards. Can be removed
+                    iter = 10
+                solVals, solVal, colors = prim_multistart(nnodes, nedges, edges, iter)
+                solname = path + 'Solutions/PrimSolutions/' + filename.replace('.col', '') + '_sol.txt'
+                writeFile(solname, nnodes, solVal, colors)
 
     elif method == 2:
         for filename in os.listdir(directory):
@@ -321,4 +313,5 @@ if __name__ == '__main__':
             solVals, solVal, colors = edges_multistart(iter, directory + filename)
             solname = './HEURISTIC/RandomEdgeSolutions/' + filename.replace('.col', '') + '_sol.txt'
             writeFile(solname, nnodes, solVal, colors)
+
 
