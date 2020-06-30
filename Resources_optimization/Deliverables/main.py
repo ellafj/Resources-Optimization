@@ -76,12 +76,11 @@ def prim_multistart(nnodes, nedges, edges, iter):
 
     for node in range(1,iter):
         solval, colors = prim(nnodes, nedges, edges, node)
-        print('running for node:', node)
         solVals.append(solval)
         allColors.append(colors)
+        print("Solution found:", solval)
 
     ind = solVals.index(min(solVals))
-    print('Best result is',allColors[ind])
     return solVals, solVals[ind], allColors[ind]
 
 
